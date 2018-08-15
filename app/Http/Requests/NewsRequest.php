@@ -22,7 +22,7 @@ class NewsRequest extends Request {
 	public function rules()
 	{
 		return [
-			'txtName' => 'required|unique:news,name',
+			'txtName' => 'required',
             'txtAlias' => 'required',
             'fImages' => 'image|max:100000'
 		];
@@ -31,7 +31,7 @@ class NewsRequest extends Request {
 	{
 		return [
 			'txtName.required' => 'Bạn chưa nhập tên bài viết',
-            'txtName.unique' => 'Tên bài viết bị trùng, mời nhập lại',
+            // 'txtName.unique' => 'Tên bài viết bị trùng, mời nhập lại',
             'txtAlias.required' => 'Bạn chưa nhập link tĩnh',
             'fImages.image' => 'Bạn chọn sai định dạng file ảnh',
             'fImages.max' => 'Ảnh bạn upload đã vượt quá dung lượng cho phép',

@@ -28,7 +28,7 @@
 	                <ul class="nav nav-tabs">
 	                  	<li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Thông tin chung</a></li>
 	                  	<li><a href="#tab_2" data-toggle="tab" aria-expanded="true">Nội dung</a></li>
-	                  	@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+	                  	@if($_GET['type']=='du-an')
 	                  	<li><a href="#tab_5" data-toggle="tab" aria-expanded="true">Album ảnh</a></li>
 	                  	@endif
 	                  	<li><a href="#tab_3" data-toggle="tab" aria-expanded="true">SEO</a></li>
@@ -55,16 +55,16 @@
 									</div>
 									
 									<div class="clearfix"></div>
-									
-									<!-- <div class="form-group">
+									@if($_GET['type']!='tin-tuc')
+									<div class="form-group">
 								      	<label for="ten">Danh mục cha</label>
 								      	<select name="txtNewsCate" class="form-control">
 
 								      		<option value="0">Chọn danh mục</option>
 								      		<?php cate_parent($parent,0,"--",0) ?>
 								      	</select>
-									</div> -->
-									
+									</div>
+									@endif
 							    	<div class="form-group @if ($errors->first('txtName')!='') has-error @endif">
 								      	<label for="ten">Tên</label>
 								      	<input type="text" id="txtName" name="txtName" value=""  class="form-control" />
@@ -87,7 +87,7 @@
 									
 									<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 								</div>
-								<div class="col-md-6 col-xs-12">
+								<!-- <div class="col-md-6 col-xs-12">
 									@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
 									<div class="form-group col-md-12 @if ($errors->first('fImagesBg')!='') has-error @endif">
 										<label for="file">File background</label>
@@ -98,7 +98,7 @@
 								      	@endif
 									</div>
 									@endif
-								</div>
+								</div> -->
 							</div>
 							<div class="clearfix"></div>
 	                  	</div><!-- /.tab-pane -->
@@ -148,7 +148,7 @@
 
 			    <div class="col-md-6">
 			    	
-			    	<div class="form-group">
+			    	<!-- <div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="noibat" >Nổi bật
 				    	</label>
@@ -159,7 +159,7 @@
 				        	<input type="checkbox" name="home"> Hiển thị trang chủ
 				    	</label>
 				    </div>
-				    @endif
+				    @endif -->
 			    	<div class="form-group">
 					      <label for="ten">Số thứ tự</label>
 					      <input type="number" min="1" name="stt" value="{!! count($data)+1 !!}" class="form-control" style="width: 100px;">

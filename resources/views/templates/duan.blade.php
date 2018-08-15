@@ -9,7 +9,6 @@
         <div class="container">
             <ul class="flex-center-center">
                 <li><a href="{{url('')}}" title="">Trang chủ</a> </li>
-
                 <li><span>Dự án</span></li>
             </ul>
         </div>

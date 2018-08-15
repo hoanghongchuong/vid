@@ -3,121 +3,70 @@
 @section('content')
 
 <?php
-
     $setting = Cache::get('setting');
-
-    $about = Cache::get('about');
-
-    $cateProject = DB::table('news_categories')->where('com', 'du-an')->get();
-
+    $banner = DB::table('banner_content')->where('position', 4)->first();
 ?>
 
-<main class="cd-main-content">
-
-    <section class="paginations">
-
-        <div class="container">
-
-            <ul class="flex-center-center">
-
-                <li><a href="{{url('')}}" title="Trang chủ">Trang chủ</a> </li>
-
-                <li><a href="{{ url('du-an') }}" title="Dự án">Dự án</a> </li>
-
-                <li><span>{{$project->name}}</span></li>
-
-            </ul>
-
-        </div>
-
-    </section>
-
-    <section class="banner-trend relative">
-
-        <img src="{{asset('upload/news/'.$project->background)}}" alt="Dự án" >
-
-        <div class="trend-abs flex-center">
-
+<main class="index">
+    <section class="about">
+        <div class="bread-wrap" style="background: url({{ asset('upload/banner/'.$banner->image) }});">
             <div class="container">
-
-                <h2><span>DỰ ÁN</span></h2>
-
-                <h1 class="light-h">{{$project->name}}</h1>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="project-detail pd-60">
-
-        <div class="container">
-
-            {!! $project->content !!}
-
-        </div>
-
-    </section>
-
-    <section class="project-gallery">
-
-        <div class="container">
-
-            <h4>Hình ảnh {{ $project->name }}</h4>
-
-            <ul>
-
-            	@foreach($albums as $album)
-
-                <li>
-
-                    <a href="{{asset('upload/albumnews/'.$album->photo)}}" title="{{ $album->photo }}" data-fancybox="images">
-
-                        <img src="{{asset('upload/albumnews/'.$album->photo)}}" alt="{{ $album->photo }}" >
-
-                        <span class="icon-abs"><i class="fa fa-search"></i> </span>
-
-                    </a>
-
-                </li>
-
-                @endforeach
-
-            </ul>
-
-        </div>
-
-    </section>
-
-    <section class="project-related pd-60">
-
-        <div class="container">
-
-            <h3 class="index-title text-uppercase text-center font-ice"><span>Các dự án khác</span></h3>
-
-            <div class="project-slider owl-carousel slider-general">
-
-                @foreach($projectOther as $project)
-
-                <div class="item">
-
-                    <a href="{{url('du-an/'.@$project->alias.'.html')}}" title="{{@$project->name}}" class="zoom"><img src="{{asset('upload/news/'.@$project->photo)}}" alt="{{@$project->name}}" > </a>
-
-                    <h4><a href="{{url('du-an/'.@$project->alias.'.html')}}" title="{{ @$project->name }}">{{@$project->name}}</a> </h4>
-
-                    <!-- <p> Khách hàng tiêu biểu</p> -->
-
+                <div class="pl-95">
+                    <ul class="s12 list-unstyled text-uppercase bread">
+                        <li><a href="{{url('')}}" title="">Trang chủ</a></li>
+                        <li>Dự án</li>
+                    </ul>
                 </div>
-
-                @endforeach
-
             </div>
-
         </div>
+        <div class="mt-150px">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="bg-white da-detail-content">
+                            <div class="da-detail-header">
+                                <h1 class="s18 text-uppercase pb-3 tit">{{$project->name}}</h1>
+                                <h3 class="s14 t1 text-uppercase da-detail-time">{{date('d/m/Y', strtotime($project->created_at))}}</h3>
+                            </div>
+                            <div class="da-detail-body">
+                                {!! $project->content !!}
+                            </div>
 
+                            <div class="da-detail-gal">
+                                <div class="row">
+                                    @foreach($albums as $album)
+                                    <div class="col-sm-6">
+                                        <div class="text-center da-gal-item">
+                                            <a data-fancybox href="{{ asset('upload/albumnews/'.$album->photo) }}" title=""><img src="{{ asset('upload/albumnews/'.$album->photo) }}" alt="" title=""></a>
+                                            <a data-fancybox="g1" class="btn text-uppercase all-btn" href="{{ asset('upload/albumnews/'.$album->photo) }}" title="">Xem tất cả</a>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <h2 class="da-detail-re"><span>Xem thêm</span></h2>
+
+                            <ul class="list-unstyled da-detail-re-list">
+                                @foreach($projectOther as $p)
+                                <li><a href="{{url('du-an/'.$p->alias.'.html')}}" title="">{{$p->name}}</a></li>
+                                @endforeach
+                            </ul>
+
+                            <div class="da-detail-cm">
+                                <div class="da-detail-like">
+                                    <div class="fb-like" data-href="{{URL::Current()}}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                                </div>                                
+                                <div class="fb-comments" data-href="{{URL::Current()}}" data-numposts="2" data-width="100%"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </section>
-
 </main>
 
 @endsection

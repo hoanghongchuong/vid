@@ -10,8 +10,6 @@ use App\NewsCate;
 use Input, File;
 use Validator;
 
-
-
 class NewsCateController extends Controller {
     
 	public function getDanhSach()
@@ -44,7 +42,7 @@ class NewsCateController extends Controller {
         $parent = NewsCate::select('id','name','parent_id')->where('com' , $com)->get()->toArray();
     	return view('admin.newscate.add', compact('parent','trang'));
     }
-    public function postAdd(NewsCateRequest $request)
+    public function postAdd(Request $request)
     {
         $com= $request->txtCom;
     	$cate = new NewsCate;
@@ -107,7 +105,7 @@ class NewsCateController extends Controller {
                     $data->status = 1; 
                 }
                 $data->update();
-                return redirect('admin/newscate?type='.$com)->with('status','Cập nhật thành công !');
+                return redirect('backend/newscate?type='.$com)->with('status','Cập nhật thành công !');
             }
             if($request->get('delete_bg')>0){
                 $background='upload/news/'.$request->get('delete_bg');

@@ -64,12 +64,12 @@
 					      	<input type="text" name="txtLink" id="txtLink" value="{{ $data->link }}"  class="form-control" />
 						</div> -->
 						
-						
+						@if($_GET['type']!='taisao')
 						<div class="form-group">
 					      	<label for="desc">Mô tả</label>
 					      	<textarea name="txtDesc" rows="5" class="form-control">{{ $data->mota }}</textarea>
 						</div>
-						
+						@endif
 					</div>
 					<div class="col-md-12 col-xs-12">
 						@if($_GET['type']=='content')

@@ -34,11 +34,11 @@
               
             <div class="clearfix"></div>
             
-            <div class="col-md-6">
-              <!-- <div class="form-group">
+            <!-- <div class="col-md-6">
+              <div class="form-group">
                 <label for="">Link</label>
                 <input type="text" name="txtLink" class="form-control" value="">
-              </div> -->
+              </div>
               <div class="form-group">
                 <label for="">Title</label>
                 <input type="text" name="title" class="form-control" value="">
@@ -47,7 +47,7 @@
                 <label for="">Mô tả</label>
                 <textarea name="mota" id="" crows="5" class="form-control"></textarea>
               </div>
-            </div>
+            </div> -->
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Vị trí</label>

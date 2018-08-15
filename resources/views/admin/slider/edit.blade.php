@@ -37,7 +37,7 @@
 					      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('fImages'); !!}</label>
 					      	@endif
 						</div>
-						@if($_GET['type']=='gioi-thieu')
+						<!-- @if($_GET['type']=='gioi-thieu')
 						<div class="form-group">
 							<div class="form-group">
 								<img src="{{ asset('upload/hinhanh/'.$data->photo1) }}" height="250" onerror="this.src='{{asset('public/admin_assets/images/no-image.jpg')}}'"  alt="NO PHOTO" />
@@ -59,7 +59,7 @@
 					    	<p class="help-block">Width:61px - Height: 61px</p>
 					    	
 						</div>
-						@endif
+						@endif -->
 						<div class="clearfix"></div>
 				    	<div class="form-group @if ($errors->first('txtName')!='') has-error @endif">
 					      	<label for="ten">Tên</label>
@@ -75,7 +75,7 @@
 						
 
 					</div>
-					@if($_GET['type']!='banner-quy-trinh' && $_GET['type']!='doi-tac-google' && $_GET['type']!='doi-tac-content')
+					<!-- @if($_GET['type']!='banner-quy-trinh' && $_GET['type']!='doi-tac-google' && $_GET['type']!='doi-tac-content')
 					<div class="col-md-12">
 						<div class="box box-info">
 			                <div class="box-header">
@@ -90,7 +90,7 @@
 			        		</div>
 			        	</div>
 					</div>
-					@endif
+					@endif -->
 					<!-- <div class="col-md-6 col-xs-12">
 						<div class="box box-info">
 			                <div class="box-header">
@@ -115,11 +115,11 @@
 						      <input type="number" min="1" name="stt" value="{!! isset($data->stt) ? $data->stt : (count($news)+1) !!}" class="form-control" style="width: 100px;">
 					    </div>
 					    
-					    <!-- <div class="form-group">
+					    <div class="form-group">
 						    <label>
 					        	<input type="checkbox" name="status" {!! (!isset($data->status) || $data->status==1)?'checked="checked"':'' !!}> Hiển thị
 					    	</label>
-					    </div> -->
+					    </div>
 				    	
 				    </div>
 			    </div>

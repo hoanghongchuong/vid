@@ -27,7 +27,7 @@
 	                <ul class="nav nav-tabs">
 	                  	<li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="false">Thông tin chung</a></li>
 	                  	<li><a href="#tab_2" data-toggle="tab" aria-expanded="true">Nội dung</a></li>
-	                  	@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+	                  	@if($_GET['type']=='du-an')
 	                  	<li><a href="#tab_3" data-toggle="tab" aria-expanded="true">Album ảnh</a></li>
 	                  	@endif
 	                  	<li><a href="#tab_4" data-toggle="tab" aria-expanded="true">SEO</a></li>
@@ -49,15 +49,16 @@
 								      	@endif
 									</div>									
 									<div class="clearfix"></div>
-									
-									<!-- <div class="form-group">
+									@if($_GET['type']!='tin-tuc')
+									<div class="form-group">
 								      	<label for="ten">Danh mục bài viết</label>
 								      	<select name="txtNewsCate" class="form-control">
 
 								      		<option value="0">Chọn danh mục</option>
 								      		<?php cate_parent($parent,0,"--",$data->cate_id) ?>
 								      	</select>
-									</div> -->
+									</div>
+									@endif
 							    	<div class="form-group @if ($errors->first('txtName')!='') has-error @endif">
 								      	<label for="ten">Tên</label>
 								      	<input type="text" name="txtName" id="txtName" value="{{ $data->name }}"  class="form-control" />
@@ -79,7 +80,7 @@
 									</div>
 									@endif
 								</div>
-								<div class="col-md-6 col-xs-12">
+								<!-- <div class="col-md-6 col-xs-12">
 									@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
 									<div class="form-group @if ($errors->first('fImagesBg')!='') has-error @endif">
 										<div class="form-group">
@@ -100,7 +101,7 @@
 									</div>
 									@endif
 									
-								</div>
+								</div> -->
 								<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 							</div>
 							<div class="clearfix"></div>
@@ -125,7 +126,6 @@
 	                			@foreach($news_img as $key => $item)
 		                        <div class="form-group" id="{!! $key !!}">
 		                            <img src="{!! asset('upload/albumnews/'.$item['photo']) !!}" style="max-width: 150px; margin: 20px;" idImg="{!! $item['id'] !!}" id="{!! $key !!}">
-
 		                            <a href="javascript:" type="button" id="del_img_news" class="btn btn-danger btn-circle icon_del"><i class="fa fa-times"></i></a>
 		                        </div>
 		                      @endforeach
@@ -165,7 +165,7 @@
 				        	<input type="checkbox" name="status" {!! (!isset($data->status) || $data->status==1)?'checked="checked"':'' !!}> Hiển thị
 				    	</label>
 				    </div>
-				    <div class="form-group">
+				    <!-- <div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="noibat" 
 				        	{{ ($data->noibat==1)?'checked="checked"':'' }}> 
@@ -178,7 +178,7 @@
 				        	<input type="checkbox" name="home" {{ ($data->home==1)?'checked="checked"':'' }}> Hiển thị trang chủ
 				    	</label>
 				    </div>
-				    @endif
+				    @endif -->
 			    </div>
 			    <div class="clearfix"></div>
 			    <div class="box-footer">

@@ -64,17 +64,17 @@
 								      	<input type="text" name="txtHotline" value="{!! old('txtHotline', isset($data) ? $data->hotline : null) !!}"  class="form-control" />
 									</div> -->
 									<div class="form-group">
-								      	<label for="ten">Fax</label>
-								      	<input type="text" name="txtFax" value="{!! old('txtFax', isset($data) ? $data->fax : null) !!}"  class="form-control" />
+								      	<label for="ten">Mô tả</label>								      	
+								      	<textarea name="txtFax" id=""  rows="5" class="form-control">{!! old('txtFax', isset($data) ? $data->fax : null) !!}</textarea>
 									</div>
 									<!-- <div class="form-group">
 								      	<label for="ten">Tọa độ</label>
 								      	<input type="text" name="txtToado" value="{!! old('txtToado', isset($data) ? $data->toado : null) !!}"  class="form-control" />
 									</div> -->
-									<!-- <div class="form-group">
-								      	<label for="ten">Tiêu đề index</label>
+									<div class="form-group">
+								      	<label for="ten">Link trang sản phẩm</label>
 								      	<input type="text" name="txtTitle_index" value="{!! old('txtTitle_index', isset($data) ? $data->title_index : null) !!}"  class="form-control" />
-									</div> -->
+									</div>
 									<div class="form-group">
 								      	<label for="ten">Copyright</label>
 								      	<input type="text" name="txtCopyright" value="{!! old('txtCopyright', isset($data) ? $data->copyright : null) !!}"  class="form-control" />
@@ -86,7 +86,7 @@
 								      	<input type="text" name="txtFacebook" value="{!! old('txtFacebook', isset($data) ? $data->facebook : null) !!}"  class="form-control" />
 									</div>
 									<div class="form-group">
-								      	<label for="ten">Instagram</label>
+								      	<label for="ten">Twitter</label>
 								      	<input type="text" name="txtTwitter" value="{!! old('txtTwitter', isset($data) ? $data->twitter : null) !!}"  class="form-control" />
 									</div>
 									<div class="form-group">

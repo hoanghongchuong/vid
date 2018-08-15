@@ -20,27 +20,26 @@ Route::post('cartajax/add', ['as' => 'addProductToCartAjax', 'uses' => 'IndexCon
 Route::get('lien-he',['as'=>'getContact', 'uses'=>'ContactController@getContact']);
 Route::post('lien-he',['as'=>'postContact', 'uses'=>'ContactController@postContact']);
 
-Route::get('tin-tuc',['as'=>'getNews', 'uses'=>'IndexController@getNews']);
-Route::get('tin-tuc/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
-Route::get('tin-tuc/{id}',['as'=>'getListNews', 'uses'=>'IndexController@getListNews']);
-
-Route::get('tuyen-dung',['as'=>'getNews', 'uses'=>'IndexController@getTuyenDung']);
-Route::get('tuyen-dung/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsTuyenDungDetail']);
+Route::get('phong-thuy',['as'=>'getNews', 'uses'=>'IndexController@getNews']);
+Route::get('phong-thuy/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
+Route::get('phong-thuy/{id}',['as'=>'getListNews', 'uses'=>'IndexController@getListNews']);
 
 Route::get('du-an', 'IndexController@duan')->name('duan');
 Route::get('du-an/{alias}.html', 'IndexController@detailProject');
 Route::get('du-an/{alias}', 'IndexController@listProject');
 
-// Ajax load more project google
+Route::get('kien-truc', 'IndexController@kientruc')->name('duan');
+Route::get('kien-truc/{alias}.html', 'IndexController@detailKienTruc');
+Route::get('kien-truc/{alias}', 'IndexController@listKienTruc');
+
+Route::get('noi-that', 'IndexController@noithat')->name('duan');
+Route::get('noi-that/{alias}.html', 'IndexController@detailNoiThat');
+Route::get('noi-that/{alias}', 'IndexController@listNoiThat');
+// Ajax load more project
 Route::get('loadmore/project','IndexController@loadmoreProject')->name('loadmoreProject');
 
-Route::get('dich-vu-seo', 'IndexController@seviceSeo');
-Route::get('dich-vu-marketing', 'IndexController@seviceMarketing');
-Route::get('dich-vu-google-adword', 'IndexController@seviceGoogle');
-Route::get('dich-vu-content', 'IndexController@seviceContent');
 
 Route::get('tim-kiem',['as'=>'searchNews', 'uses'=>'IndexController@search']);
-Route::get('tim-kiem-tuyen-dung',['as'=>'searchTuyenDung', 'uses'=>'IndexController@searchTuyenDung']);
 Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postNewsletter']);
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
@@ -83,10 +82,7 @@ Route::post('tuyen-dung',['as'=>'postTuyenDung', 'uses'=>'IndexController@postTu
 Route::get('{id}.html',['as'=>'getProductDetail', 'uses'=>'IndexController@getProductDetail']);
 Route::get('bai-viet/{id}.html',['as'=>'getBaiVietDetail', 'uses'=>'IndexController@getBaiVietDetail']);
 Route::get('error/404.html',['as'=>'getErrorNotFount', 'uses'=>'IndexController@getErrorNotFount']);
-// Route::controllers([
-// 	'auth' => 'Auth\AuthController',
-// 	'password' => 'Auth\PasswordController',
-// ]);
+
 
 Route::get('backend/login',['as'=>'admin.auth.getLogin', 'uses'=>'AdminAuth\AuthController@getLogin']);
 Route::post('backend/postlogin',['as'=>'admin.auth.postLogin', 'uses'=>'AdminAuth\AuthController@postLogin']);
@@ -378,36 +374,9 @@ Route::group(['middleware' =>'authen', 'prefix' => 'backend'], function(){
 		Route::post('edit/{id}',['as'=>'admin.slogan.postEdit', 'uses'=>'Admin\SloganController@postEdit']);
 		Route::get('delete/{id}',['as'=>'admin.slogan.delete', 'uses' => 'Admin\SloganController@delete']);
 	});
-	Route::group(['prefix'=>'banggia'], function(){
-		Route::get('/',['as'=>'admin.banggia.index','uses'=>'Admin\BangGiaController@getList']);
-		Route::get('add',['as'=>'admin.banggia.getAdd','uses'=>'Admin\BangGiaController@getAdd']);
-		Route::post('add',['as'=>'admin.banggia.postAdd','uses'=>'Admin\BangGiaController@postAdd']);
-		Route::get('edit/{id}',['as'=>'admin.banggia.getEdit','uses'=>'Admin\BangGiaController@getEdit']);
-		Route::post('edit/{id}',['as'=>'admin.banggia.update','uses'=>'Admin\BangGiaController@update']);
-		Route::get('delete/{id}',['as'=>'admin.banggia.getDelete','uses'=>'Admin\BangGiaController@getDelete']);
-		
-	});
+	
 	
 	Route::post('uploadImg', ['as'=>'admin.uploadImg' ,'uses'=>'Admin/UploadController@uploadImg']);
 	Route::post('dropzone/store', ['as'=>'dropzone.store','uses'=>'Admin/ProductController@dropzoneStore']);
 
-});
-Route::get('schema/create-product', function(){
-	Schema::create('products', function($table){
-		$table->increments('id');
-		//$table->integer('cate_id')->unsigned();
-		//$table->foreign('cate_id')->references('id')->on('product_categories')->onDelete('cascade');
-		$table->integer('cate_id')->unsigned();
-		$table->integer('stt')->nullable();
-		$table->string('name');
-		$table->string('alias');
-		$table->text('photo')->nullable();
-		$table->integer('price');
-		$table->longText('mota')->nullable();
-		$table->longText('content')->nullable();
-		$table->integer('status');
-		$table->longText('keyword')->nullable();
-		$table->longText('description')->nullable();
-		$table->timestamps();
-	});
 });

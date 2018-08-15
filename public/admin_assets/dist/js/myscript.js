@@ -107,28 +107,7 @@ $(document).ready(function(){
     });
 });
 $(document).ready(function(){
-    $('#del_img_news').on('click', function(){
 
-        var url =  homeUrl() + "/backend/news/delimg/";
-        var _token = $("form[name='frmEditNews']").find("input[name='_token']").val();
-        var idImg = $(this).parent().find("img").attr("idImg");
-        var img = $(this).parent().find("img").attr("src");
-        var rid = $(this).parent().find("img").attr("id");
-        // alert(rid);
-        $.ajax({
-            url: url + idImg,
-            type: 'GET',
-            cache: false,
-            data: {"_token":_token,"idImg":idImg,"urlImg":img},
-            success: function(data){
-                if (data == 'OK') {
-                    $('#'+rid).remove();
-                }else{
-                    alert('Error ! Please contact admin !');
-                }
-            }
-        });
-    });
 });
 
 $(document).ready(function(){
@@ -153,6 +132,33 @@ $(document).ready(function(){
             }
         });
     });    
+
+
+
+
+    $('a#del_img_news').on('click', function(){
+        var url =  homeUrl() + "/backend/news/delimg/";
+        var _token = $("form[name='frmEditNews']").find("input[name='_token']").val();
+        var idImg = $(this).parent().find("img").attr("idImg");
+        var img = $(this).parent().find("img").attr("src");
+        var rid = $(this).parent().find("img").attr("id");
+        // alert(rid);
+        $.ajax({
+            url: url + idImg,
+            type: 'GET',
+            cache: false,
+            data: {"_token":_token,"idImg":idImg,"urlImg":img},
+            success: function(data){
+                if (data == 'OK') {
+                    $('#'+rid).remove();
+                }else{
+                    alert('Error ! Please contact admin !');
+                }
+            }
+        });
+    });
+
+
 });
 tinymce.init({
     selector: 'textarea#txtContent',

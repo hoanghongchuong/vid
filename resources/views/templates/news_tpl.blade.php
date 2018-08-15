@@ -1,143 +1,49 @@
 @extends('index')
-
 @section('content')
-
 <?php
-
     $setting = Cache::get('setting');
-
     $banner = DB::table('banner_content')->where('position', 2)->first();
-
 ?>
 
-<main class="cd-main-content">
-
-    <section class="paginations">
-
-        <div class="container">
-
-            <ul class="flex-center-center">
-
-                <li><a href="{{url('')}}" title="Trang chủ">Trang chủ</a> </li>
-
-                <li><span> Tin tức</span></li>
-
-            </ul>
-
-        </div>
-
-    </section>
-
-    <section class="banner-trend">
-
-        <img src="{{asset('upload/banner/'.$banner->image)}}" alt="Tin tức">
-
-    </section>
-
-    <section class="news pd-60">
-
-        <div class="container">
-
-            <div class="row">
-
-                <div class="col-md-8">
-
-                    <div class="news-list">
-
-                        @foreach($tintuc as $item)
-
-                        <div class="news-item">
-
-                            <h4><a href="{{url('tin-tuc',$item->alias.'.html')}}" title="{{$item->name}}">{{$item->name}}</a> </h4>
-
-                            <p class="date">{{date('d/m/Y', strtotime($item->created_at))}}</p>
-
-                            <a href="{{url('tin-tuc',$item->alias.'.html')}}" title="" class="zoom"><img src="{{asset('upload/news/'.$item->photo)}}" alt="{{$item->name}}" > </a>
-
-                            <p class="desc">{!! $item->mota !!} </p>
-
-                            <p  class="read-more"><a href="{{url('tin-tuc',$item->alias.'.html')}}" title="Xem thêm">XEM THÊM</a> </p>
-
-                        </div>
-
-                        @endforeach
-
-                    </div>
-
-                    <div class="pagi">
-
-                        {!! $tintuc->links() !!}
-
-                    </div>
-
+<main class="index">
+    <section class="about">
+        <div class="bread-wrap" style="background: url({{ asset('upload/banner/'.$banner->image) }});">
+            <div class="container">
+                <div class="pl-95">
+                    <h1 class="s36 light text-white text-uppercase bread-tit">Phong thủy</h1>
+                    <ul class="s12 list-unstyled text-uppercase bread">
+                        <li><a href="{{url('')}}" title="">Trang chủ</a></li>
+                        <li>Phong thủy</li>
+                    </ul>
                 </div>
-
-                <div class="col-md-4">
-
-                    <div class="sticky-top news-right">
-
-                        <div class="search">
-
-                            <h2>TÌM KIẾM</h2>
-
-                            <form method="get" action="{{ route('searchNews') }}">
-
-                                {{csrf_field()}}
-
-                                <input type="text" required name="txtSearch" placeholder="Nhập tìm kiếm...">
-
-                                <button type="submit"><i class="fa fa-search"></i> </button>
-
-                            </form>
-
-                        </div>
-
-                        <div class="news-plus">
-
-                            <h1>TIN NỔI BẬT</h1>
-
-                            @foreach($hot_news as $hot)
-
-                            <div class="news-child">
-
-                                <div class="row">
-
-                                    <div class="col-md-4 col-4">
-
-                                        <a href="{{url('tin-tuc/'.$hot->alias.'.html')}}" title="{{$hot->name}}" class="zoom"><img src="{{asset('upload/news/'.$hot->photo)}}" alt="{{$hot->name}}" > </a>
-
-                                    </div>
-
-                                    <div class="col-md-8 col-8">
-
-                                        <div class="news-child-txt">
-
-                                            <h5><a href="{{url('tin-tuc/'.$hot->alias.'.html')}}" title="{{$hot->name}}">{{$hot->name}}</a> </h5>
-
-                                            <p>{{ date('d,m/Y', strtotime($hot->created_at)) }}</p>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                            @endforeach
-
-                        </div>
-
-                    </div>
-
-                </div>
-
             </div>
-
         </div>
-
+        <div class="pt-wrap">
+            <div class="container">
+                <div class="row pt-wrap-row">
+                    @foreach($tintuc as $item)
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="pt-item">
+                            <figure class="pt-img">
+                                <a href="{{url('phong-thuy',$item->alias.'.html')}}" title=""><img src="{{asset('upload/news/'.$item->photo)}}" title="{{$item->name}}" alt="{{$item->name}}"></a>
+                            </figure>
+                            <figcaption class="pt-content">
+                                <h2 class="bold t2 py-3 pt-content-tit"><a href="{{url('phong-thuy',$item->alias.'.html')}}" title="{{$item->name}}">{{$item->name}}</a></h2>
+                                <div class="pt-content-wrap">
+                                    <p>{!! $item->mota !!}</p>
+                                </div>
+                            </figcaption>
+                        </div>
+                    </div>
+                    @endforeach                    
+                </div>
+                <div class="text-center pb-4">
+                    {!! $tintuc->links() !!}
+                </div>
+            </div>
+        </div>
+        
     </section>
-
 </main>
 
 @endsection

@@ -1,65 +1,46 @@
 <?php
     $setting = Cache::get('setting');
-    $brands = DB::table('partner')->orderBy('id')->get();
 ?>
-<section class="footer">
+<footer class="b1 ft">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 flex-coloum">
-                <a href="{{ url('') }}" type="" class="logo-footer">
-                    <img src="{{asset('upload/hinhanh/'.$setting->photo_footer)}}" alt="" title="">
-                </a>
-                <p class="copyright">{{$setting->copyright}}</p>
-            </div>
-            <div class="col-md-4">
-                <h5>LIÊN  HỆ</h5>
-                <ul>
-                    <li>
-                        <i class="fa fa-send"></i>
-                        <span>{{$setting->address}}</span>
-                    </li>
-                    <li>
-                        <i class="fa fa-phone"></i>
-                        <a href="tel:{{$setting->phone}}" title="">{{$setting->phone}}</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-envelope"></i>
-                        <a href="#" title="">{{$setting->email}}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-2">
-                <h5>DỊCH VỤ</h5>
-                <ul class="no-padding">
-                    <li>
-                        <a href="{{url('dich-vu-marketing')}}" title="">Facebook Ads</a>
-                    </li>
-                    <li>
-                        <a href="{{url('dich-vu-google-adword')}}" title="">Google Adwords</a>
-                    </li>
-                    <li>
-                        <a href="{{url('dich-vu-seo')}}" title="">SEO</a>
-                    </li>
-                    <li>
-                        <a href="{{url('dich-vu-content')}}" title="">Content</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h5>GỬI TIN NHẮN</h5>
-                <form class="newsletter-form" method="post" action="{{ route('postNewsletter') }}">
-                    {{csrf_field()}}
-                    <input type="email" name="txtEmail" placeholder="Đăng ký để nhận thông tin ">
-                    <button type="submit"><i class="fa fa-send"></i> </button>
-                </form>
-                <div class="social">
-                    <a href="{{$setting->facebook}}" title="" class="fa fa-facebook"></a>
-                    <a href="{{$setting->twitter}}" title="" class="fa fa-twitter"></a>
-                    <a href="{{$setting->google}}" title="" class="fa fa-instagram"></a>
-                    <a href="{{$setting->youtube}}" title="" class="fa fa-youtube"></a>
+        <div class="ft-1">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="text-lg-left text-center"><a href="{{url('')}}" title=""><img src="{{asset('upload/hinhanh/'.$setting->photo_footer)}}" title="" alt=""></a></div>
+                    <div class="ft-cap">
+                       {{$setting->fax}}
+                    </div>
+                    <ul class="list-unstyled ft-add">
+                        <li class="d-flex align-items-baseline">
+                            <i class="fas fa-phone"></i>
+                            <a href="tel:{{$setting->phone}}" title="">{{$setting->phone}}</a>
+                        </li>
+                        <li class="d-flex align-items-baseline">
+                            <i class="fas fa-envelope"></i> <a href="{{$setting->email}}" title="">{{$setting->email}}</a>
+                        </li>                        
+                        <li class="d-flex align-items-baseline">
+                            <i class="fas fa-map-marker-alt"></i> 
+                            <span>{{$setting->address}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 offset-lg-2 col-md-6">
+                    <ul class="text-lg-right text-center list-inline ft-social">
+                        <li><a href="{{$setting->facebook}}" style="padding: 10px;" title=""><i class="fab fa-facebook-f"></i></a></li>
+                        <li><a href="{{$setting->twitter}}" style="padding: 10px;" title=""><i class="fab fa-twitter"></i></a></li>
+                        <li><a href="{{$setting->youtube}}" style="padding: 10px;" title=""><i class="fab fa-youtube"></i></a></li>
+                        <li><a href="{{$setting->google}}" style="padding: 10px;" title=""><i class="fab fa-google"></i></a></li>
+                    </ul>
+                    <form class="text-lg-right text-center ft-frm" action="{{ route('postNewsletter') }}" method="post">
+                        {{ csrf_field() }}
+                        <input type="email" name="txtEmail" placeholder="Email" required="required">
+                        <button class="btn " type="submit">Gửi</button>
+                    </form>
                 </div>
             </div>
         </div>
+        <div class="s12 text-lg-right text-center light ft-last">
+            © <a href="www.gco.vn" title="">GCO GROUP</a> 2018. All rights reserved.
+        </div>
     </div>
-</section>
-
+</footer>

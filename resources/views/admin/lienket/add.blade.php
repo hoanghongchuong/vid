@@ -55,12 +55,12 @@
 					</div> -->
 					
 					
-					
+					@if($_GET['type']!='taisao')
 					<div class="form-group">
 				      	<label for="desc">Mô tả</label>
 				      	<textarea name="txtDesc" rows="5" class="form-control"></textarea>
 					</div>
-					
+					@endif
 					<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 				</div>
 				<div class="col-md-12 col-xs-12">

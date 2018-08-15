@@ -96,17 +96,18 @@ class IndexController extends Controller {
 		$partners = DB::table('partner')->where('status',1)->orderBy('id','desc')->get();
 		$slogans = DB::table('slogan')->orderBy('stt','asc')->get();
 		$feedback = DB::table('feedback')->orderBy('id','desc')->get();
-		$projects = DB::table('news')->where('status',1)->where('home',1)->take(6)->orderBy('id','desc')->get();
+		$news = DB::table('news')->where('status',1)->where('noibat',1)->where('com','tin-tuc')->take(20)->orderBy('id','desc')->get();
 		
 		$setting = Cache::get('setting');
 		$title = $setting->title;
 		$keyword = $setting->keyword;
 		$description = $setting->description;
+		$whys = DB::table('lienket')->where('com','taisao')->orderBy('stt','asc')->get();
 		$com = 'index';
 		// End cấu hình SEO
 		$img_share = asset('upload/hinhanh/'.$setting->photo);
 
-		return view('templates.index_tpl', compact('com','about','tintuc_moinhat','keyword','description','title','img_share','slider','projects','partners','slogans','feedback'));
+		return view('templates.index_tpl', compact('com','about','tintuc_moinhat','keyword','description','title','img_share','slider','news','partners','slogans','whys'));
 	}
 	public function getProduct(Request $req)
 	{
@@ -241,48 +242,27 @@ class IndexController extends Controller {
 		$title = "Tìm kiếm: ".$search;
 		$keyword = "Tìm kiếm: ".$search;
 		$description = "Tìm kiếm: ".$search;
-		$img_share = '';
-		// End cấu hình SEO
+		$img_share = '';		
+		$news = DB::table('news')->select()->where('name', 'LIKE', '%' . $search . '%')
+		->whereIn('com',['kien-truc', 'noi-that','phong-thuy','du-an'])
+		->orderBy('id','DESC')->get();
 		
-		$news = DB::table('news')->select()->where('name', 'LIKE', '%' . $search . '%')->where('com','tin-tuc')->orderBy('id','DESC')->get();
-		$hot_news = DB::table('news')->where('status',1)->where('com', 'tin-tuc')->where('noibat',1)->orderBy('stt','asc')->take(8)->get();
-		return view('templates.search_tpl', compact('news','banner_danhmuc','keyword','description','title','img_share','search','cate_pro','hot_news'));
-	}
-
-	public function searchTuyenDung(Request $request)
-	{
-		$search = $request->txtSearch;
-		
-		// Cấu hình SEO
-		$title = "Tìm kiếm: ".$search;
-		$keyword = "Tìm kiếm: ".$search;
-		$description = "Tìm kiếm: ".$search;
-		$img_share = '';
-		// End cấu hình SEO
-		
-		$news = DB::table('news')->select()->where('name', 'LIKE', '%' . $search . '%')->where('com','tuyen-dung')->orderBy('id','DESC')->get();
-		$hot_news = DB::table('news')->where('status',1)->where('com', 'tuyen-dung')->where('noibat',1)->orderBy('stt','asc')->take(8)->get();
-		return view('templates.searchtuyendung', compact('news','banner_danhmuc','keyword','description','title','img_share','search','cate_pro','hot_news'));
+		return view('templates.search_tpl', compact('news','keyword','description','title','img_share','search'));
 	}
 
 	public function getNews()
 	{
-		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();
-		$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
-		$brands = DB::table('partner')->orderBy('id','desc')->get();
-		$tintuc = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('stt','asc')->paginate(3);
-		$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','tin-tuc')->get()->first();
-		
-		$hot_news = DB::table('news')->where('status',1)->where('com', 'tin-tuc')->where('noibat',1)->orderBy('stt','asc')->take(8)->get();
-		
+		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();		
+		$tintuc = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('stt','asc')->paginate(24);		
+		$hot_news = DB::table('news')->where('status',1)->where('com', 'tin-tuc')->where('noibat',1)->orderBy('stt','asc')->take(8)->get();		
 		$com='tin-tuc';
 		// Cấu hình SEO
-		$title = "Tin tức";
-		$keyword = "Tin tức";
-		$description = "Tin tức";
+		$title = "Tin tức phong thủy";
+		$keyword = "Tin tức phong thủy";
+		$description = "Tin tức phong thủy";
 		$img_share = '';
 		// End cấu hình SEO
-		return view('templates.news_tpl', compact('tintuc','banner_danhmuc','tintuc_noibat','camnhan_khachhang','keyword','description','title','img_share','com','cateNews','cate_pro','brands','hot_news'));
+		return view('templates.news_tpl', compact('tintuc','keyword','description','title','img_share','com','cateNews','hot_news'));
 	}
 	public function getListNews($id)
 	{
@@ -337,15 +317,9 @@ class IndexController extends Controller {
 	{
 		$news_detail = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->where('alias',$id)->get()->first();
 		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();
-		if(!empty($news_detail)){
-			$camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->get();
-			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','bai-viet')->get()->first();
-			$quangcao_tintuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','quang-cao')->get();
-			$tintuc_moinhat_detail = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('created_at','desc')->take(5)->get();
-			$tinkhac = DB::table('news')->where('status',1)->where('id','<>',$id)->take(7)->get();
-			$hot_news = DB::table('news')->where('status',1)->where('com', 'tin-tuc')->where('noibat',1)->orderBy('stt','asc')->take(5)->get();
+		if(!empty($news_detail)){			
 			$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
-			$baiviet_khac = DB::table('news')->select()->where('status',1)->where('cate_id','=',$news_detail->cate_id)->where('id','<>', $news_detail->id)->where('com','tin-tuc')->orderby('created_at','desc')->take(6)->get();
+			$baiviet_khac = DB::table('news')->where('status',1)->where('id','<>', $news_detail->id)->where('com','tin-tuc')->orderby('id','desc')->take(5)->get();
 			$com='tin-tuc';
 			$setting = Cache::get('setting');
 			// Cấu hình SEO
@@ -358,7 +332,7 @@ class IndexController extends Controller {
 			$description = $news_detail->description;
 			$img_share = asset('upload/news/'.$news_detail->photo);
 
-			return view('templates.news_detail_tpl', compact('news_detail','com','tintuc_moinhat_detail','cateNews','banner_danhmuc','baiviet_khac','quangcao_tintuc','keyword','description','title','img_share','hot_news','tinkhac','cate_pro'));
+			return view('templates.news_detail_tpl', compact('news_detail','com','banner_danhmuc','baiviet_khac','keyword','description','title','img_share'));
 		}else{
 			return redirect()->route('getErrorNotFount');
 		}
@@ -689,7 +663,7 @@ class IndexController extends Controller {
 	public function listProject($alias)
 	{
 		$cate = DB::table('news_categories')->where('alias', $alias)->first();
-		$projects = DB::table('news')->where('status', 1)->where('com', 'du-an')->where('cate_id', $cate->id)->orderBy('id', 'desc')->get();
+		$projects = DB::table('news')->where('status', 1)->where('com', 'du-an')->where('cate_id', $cate->id)->orderBy('stt', 'asc')->get();
 		if(!empty($cate->title)){
 				$title = $cate->title;
 			}else{
@@ -697,14 +671,13 @@ class IndexController extends Controller {
 			}
 			$keyword = $cate->keyword;
 			$description = $cate->description;
-		return view('templates.listduan', compact('projects','title','description', 'keyword'));
+		return view('templates.listduan', compact('projects','title','description', 'keyword','cate'));
 	}
 	public function detailProject($alias)
-	{
-		// $newProject = DB::table('news')->where('status', 1)->orderBy('id','desc')->take(4)->get();
+	{		
 		$project = DB::table('news')->where('status', 1)->where('alias', $alias)->first();
 		$albums = DB::table('images')->where('news_id', $project->id)->orderBy('id','asc')->get();
-		$projectOther = DB::table('news')->where('status', 1)->where('com', $project->com)->get();
+		$projectOther = DB::table('news')->where('status', 1)->where('com', $project->com)->take(4)->get();
 		if(!empty($project->title)){
 				$title = $project->title;
 			}else{
@@ -715,64 +688,64 @@ class IndexController extends Controller {
 		return view('templates.detailproject', compact('project','title','description', 'keyword','projectOther','albums'))	;
 	}
 
-	public function seviceSeo()
-	{
-		$com = 'dich-vu';
-		$why = DB::table('lienket')->where('com','seo')->orderBy('stt','asc')->get();
-		$quytrinh = DB::table('lienket')->where('com','quy-trinh-seo')->orderBy('stt','asc')->get();
-		$about = DB::table('about')->where('com','quy-trinh-seo')->first();
-		$projects = DB::table('news')->where('status',1)->where('com','du-an-seo')->where('noibat',1)->orderBy('stt','asc')->get();
-		$partners = DB::table('slider')->where('com','doi-tac-seo')->get();
-		$banner = DB::table('slider')->where('com', 'seo')->get();
-		$title = 'Dịch vụ SEO';
-		$description = 'Dịch vụ SEO';
-		$keyword = 'Dịch vụ SEO';
+	public function listKienTruc($alias){
+		$categories = DB::table('news_categories')->where('com','kien-truc')->orderBy('stt','asc')->get();
+		$cate = DB::table('news_categories')->where('com','kien-truc')->where('alias', $alias)->first();
+		$projects = DB::table('news')->where('status', 1)->where('com', 'kien-truc')->where('cate_id', $cate->id)->orderBy('stt', 'asc')->paginate(8);
+		if(!empty($cate->title)){
+				$title = $cate->title;
+			}else{
+				$title = $cate->name;
+			}
+			$keyword = $cate->keyword;
+			$description = $cate->description;
+		return view('templates.listkientruc', compact('projects','title','description', 'keyword','cate','categories'));
+	}
 
-		return view('templates.seo_tpl', compact('com', 'why','quytrinh','about','projects','partners','title','description','keyword','banner'));
+	public function detailKienTruc($alias)
+	{		
+		$project = DB::table('news')->where('status', 1)->where('com','kien-truc')->where('alias', $alias)->first();
+		$albums = DB::table('images')->where('news_id', $project->id)->orderBy('id','asc')->get();
+		$projectOther = DB::table('news')->where('status', 1)->where('com', $project->com)->take(4)->get();
+		if(!empty($project->title)){
+				$title = $project->title;
+			}else{
+				$title = $project->name;
+			}
+			$keyword = $project->keyword;
+			$description = $project->description;
+		return view('templates.detailKienTruc', compact('project','title','description', 'keyword','projectOther','albums'))	;
 	}
-	public function seviceGoogle()
-	{
-		$com = 'dich-vu';
-		$why = DB::table('lienket')->where('com','google')->orderBy('stt','asc')->get();
-		$quytrinh = DB::table('lienket')->where('com','quy-trinh-google')->orderBy('stt','asc')->take(3)->get();
-		$projects = DB::table('news')->where('status',1)->where('com','du-an-google')->orderBy('stt','asc')->get();
-		$partners = DB::table('slider')->where('com','doi-tac-google')->get();
-		$banner = DB::table('slider')->where('com', 'google')->first();
-		$title = 'Dịch vụ google adword';
-		$description = 'Dịch vụ google adword';
-		$keyword = 'Dịch vụ google adword';
-		
-		return view('templates.google', compact('com','why','quytrinh','title','description','keyword','partners','projects','banner'));
-		
+
+	public function listNoiThat($alias){
+		$categories = DB::table('news_categories')->where('com','noi-that')->orderBy('stt','asc')->get();
+		$cate = DB::table('news_categories')->where('com','noi-that')->where('alias', $alias)->first();
+		$projects = DB::table('news')->where('status', 1)->where('com', 'noi-that')->where('cate_id', $cate->id)->orderBy('stt', 'asc')->paginate(8);
+		if(!empty($cate->title)){
+				$title = $cate->title;
+			}else{
+				$title = $cate->name;
+			}
+			$keyword = $cate->keyword;
+			$description = $cate->description;
+		return view('templates.listnoithat', compact('projects','title','description', 'keyword','cate','categories'));
 	}
-	public function seviceMarketing()
-	{
-		$com = 'dich-vu';
-		$why = DB::table('lienket')->where('com','marketing')->orderBy('stt','asc')->get();
-		$quytrinh = DB::table('lienket')->where('com','quy-trinh-marketing')->orderBy('stt','asc')->get();
-		$projects = DB::table('news')->where('status',1)->where('com','du-an-marketing')->orderBy('stt','asc')->get();
-		$partners = DB::table('slider')->where('com','doi-tac-marketing')->get();
-		$banner = DB::table('slider')->where('com', 'marketing')->get();
-		$title = 'Dịch vụ marketing';
-		$description = 'Dịch vụ marketing';
-		$keyword = 'Dịch vụ marketing';
-		return view('templates.marketing', compact('com','why','quytrinh','title','description','keyword','partners','projects','banner'));
+
+	public function detailNoiThat($alias)
+	{		
+		$project = DB::table('news')->where('status', 1)->where('com','noi-that')->where('alias', $alias)->first();
+		$albums = DB::table('images')->where('news_id', $project->id)->orderBy('id','asc')->get();
+		$projectOther = DB::table('news')->where('status', 1)->where('com', $project->com)->take(4)->get();
+		if(!empty($project->title)){
+				$title = $project->title;
+			}else{
+				$title = $project->name;
+			}
+			$keyword = $project->keyword;
+			$description = $project->description;
+		return view('templates.detailNoiThat', compact('project','title','description', 'keyword','projectOther','albums'))	;
 	}
-	public function seviceContent()
-	{
-		$com = 'dich-vu';
-		$why = DB::table('lienket')->where('com','content')->first();
-		$slogan = DB::table('about')->where('com','slogan-content')->first();
-		$quytrinh = DB::table('lienket')->where('com','quy-trinh-content')->orderBy('stt','asc')->get();
-		$projects = DB::table('news')->where('status',1)->where('com','du-an-content')->orderBy('stt','asc')->get();
-		$partners = DB::table('slider')->where('com','doi-tac-content')->get();
-		$banner = DB::table('slider')->where('com', 'content')->first();
-		$title = 'Content';
-		$description = 'Content';
-		$keyword = 'Content';
-		return view('templates.content_tpl', compact('com','why','quytrinh','title','description','keyword','partners','projects','banner','slogan'));
-		
-	}
+
 	public function loadmoreProject(Request $req)
 	{
 		$offset = $req->offset;

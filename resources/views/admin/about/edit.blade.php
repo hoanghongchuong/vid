@@ -33,7 +33,7 @@
 	                <div class="tab-content">
 	                  	<div class="tab-pane active" id="tab_1">
 	                  		<div class="row">
-		                  		<div class="col-md-6 col-xs-12">
+		                  		<!-- <div class="col-md-6 col-xs-12">
 		                  			@if($_GET['type']=='gioi-thieu')
 									<div class="form-group @if ($errors->first('fImages')!='') has-error @endif">
 										<div class="form-group">
@@ -63,11 +63,11 @@
 								      	@endif
 									</div>
 									
-								</div>
+								</div> -->
 								<input type="hidden" name="txtCom" value="{{ old('txtCom', isset($data) ? @$data->com : null) }}">
 								<div class="clearfix"></div>
 								
-								<div class="col-md-12 col-xs-12">
+								<!-- <div class="col-md-12 col-xs-12">
 									<div class="box box-info">
 						                <div class="box-header">                                               
 						                  	<h3 class="box-title">Mô tả</h3>
@@ -80,8 +80,7 @@
 						        			<textarea name="txtDesc" id="txtContent" cols="50" rows="5">{{ @$data->mota }}</textarea>
 						        		</div>
 						        	</div>
-								</div>
-								@if($_GET['type']=='gioi-thieu')
+								</div> -->								
 								<div class="col-md-12 col-xs-12">
 									<div class="box box-info">
 						                <div class="box-header">                                               
@@ -92,15 +91,14 @@
 							                </div>
 						                </div>
 						                <div class="box-body pad">
-						        			<textarea name="txtContent" id="txtContent" cols="50" rows="5">{{ @$data->content }}</textarea>
+						        			<textarea name="txtContent" @if($_GET['type']=='gioi-thieu') id="txtContent" class="form-control" @endif cols="100" rows="5">{{ @$data->content }}</textarea>
 						        		</div>
 						        	</div>
 								</div>
-								@endif
+								
 							</div>
 							<div class="clearfix"></div>
-	                  	</div><!-- /.tab-pane -->
-	                  	
+	                  	</div><!-- /.tab-pane -->	                  	
 	                	<div class="tab-pane" id="tab_2">
 	                  		<div class="row">
 		                    	<div class="col-md-6 col-xs-12">

@@ -1,48 +1,76 @@
 <?php
     $setting = Cache::get('setting');
+    $cateProject = DB::table('news_categories')->where('com','du-an')->orderBy('stt','asc')->get();
+    $cateKienTruc = DB::table('news_categories')->where('com','kien-truc')->orderBy('stt','asc')->get();
+    $cateNoiThat = DB::table('news_categories')->where('com','noi-that')->orderBy('stt','asc')->get();
 ?>
-<header class="header-home">
-    <section class="header-section visible-desktop">
-        <div class="container">
-            <div class="header-nav">
-                <ul>
-                    <li class="active"><a href="{{url('')}}" title="">Trang chủ</a> </li>
-                    <li><a href="{{url('gioi-thieu')}}" title="">Giới thiệu</a> </li>
-                    <li>
-                        <a href="#" title="">Dịch Vụ</a>
-                        <ul class="submenu">
-                            <li><a href="{{url('dich-vu-marketing')}}" title="">Facebook ads</a> </li>
-                            <li><a href="{{url('dich-vu-google-adword')}}" title="">Google adword</a> </li>
-                            <li><a href="{{url('dich-vu-seo')}}" title="">Seo</a> </li>
-                            <li><a href="{{url('dich-vu-content')}}" title="">Content</a> </li>
-                        </ul>
-                    </li>
-                    <li class="logo">
-                        <a href="{{url('')}}" title=""><img src="{{asset('upload/hinhanh/'.$setting->photo)}}" alt="" title=""> </a>
-                    </li>
-                    <li><a href="{{url('du-an')}}" title="">Dự Án</a></li>
-                    <li>
-                        <a href="#" title="">Tin tức</a>
-                        <ul class="submenu">
-                            <li><a href="{{url('tin-tuc')}}" title="">Tin tức</a> </li>
-                            <li><a href="{{url('tuyen-dung')}}" title="">Tuyển dụng</a> </li>
-                        </ul>
-                    </li>
-                    <li><a href="{{url('lien-he')}}" title="">Liên hệ</a> </li>
-                </ul>
-                <a href="#" title="" class="link-contact bg-change" data-toggle="modal" data-target="#register-form"><span>Liên hệ tư vấn</span></a>
-            </div>
-        </div>
-    </section>
-    <section class="header-mobile visible-mobile">
-        <div class="container">
-            <div class="logo flex-center-between">
-                <a href="" title=""><img src="{{asset('upload/hinhanh/'.$setting->photo)}}" alt="" title=""> </a>
-                <div class="mobile-action">
-                    <a href="" data-toggle="modal" data-target="#register-form" title="Đăng ký tư vấn" class="register-icon"><i class="fa fa-pencil-square-o"></i></a>
-                    <a id="cd-menu-trigger" href="#0" class=""><span class="cd-menu-icon"></span></a>
+<h1 class="sr-only">Vidcom</h1>
+    <header class="Fixed fixed-top top">
+        <div class="top-wrapmenu">
+            <div class="container">
+                <div class="w-100 d-flex align-items-center justify-content-between top-menu">
+                    <!-- logo -->
+                    <div class="d-flex w-100 align-items-center justify-content-between top-menu-btn">
+                        <!-- hamburger menu -->
+                        <a id="nav-icon" href="#menu" class="Fixed fix d-xl-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                        <a href="{{url('')}}" title=""><img src="{{asset('upload/hinhanh/'.$setting->photo)}}" alt="" title="" class="logo"></a>
+                    <!-- </div>
+                    
+                    <div class="d-flex align-items-center"> -->
+                        <!-- menu -->
+                        <nav id="menu" class="menu-wrap">   
+                            <ul class="menu medium text-uppercase">
+                                <li class="active"><a href="{{url('')}}" title="">Trang chủ</a></li>
+                                <li><a href="{{url('gioi-thieu')}}" title="">Về chúng tôi</a></li>
+                                <li><a href="javascript:0;" title="">Kiến trúc</a>
+                                    <ul class="">
+                                        @foreach($cateKienTruc as $kientruc)
+                                        <li><a href="{{url('kien-truc/'.$kientruc->alias)}}" title="">{{$kientruc->name}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                <li><a href="javascript:0;" title="">Nội thất đẹp</a>
+                                    <ul class="">
+                                        @foreach($cateNoiThat as $kientruc)
+                                        <li><a href="{{url('noi-that/'.$kientruc->alias)}}" title="">{{$kientruc->name}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                <li><a href="{!! $setting->title_index !!}" target="_blank" title="">Sản phẩm</a></li>
+                                <li><a href="javascript:;" title="">Dự án</a>
+                                    <ul class="">
+                                        @foreach($cateProject as $cateP)
+                                        <li><a href="{{url('du-an/'.$cateP->alias)}}" title="">{{$cateP->name}}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                                <li><a href="{{url('phong-thuy')}}" title="">phong thủy</a></li>
+                                <li><a href="{{url('lien-he')}}" title="">Liên hệ</a></li>
+                            </ul>
+                        </nav>
+                        
+                        <div class="menu-r">
+                            <div class="d-flex align-items-center menu-r-top">
+                                <!-- search  -->
+                                <div class="pl-lg-5 pl-0 search-dropdown">
+                                    <a href="#" title="" data-toggle="dropdown"><img src="{{ asset('public/images/search.png')}}" alt="" title=""></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <form action="{{ route('searchNews') }}" method="get" class="trans d-flex align-items-center search-frm">
+                                            
+                                            <input class="form-control light s14 search-ip" type="text" required="required" name="txtSearch" placeholder="Tìm kiếm">
+                                            <button class="btn search-btn"><img src="{{ asset('public/images/search.png')}}" alt="" title=""></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-    </section>
-</header>
+    </header>
