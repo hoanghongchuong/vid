@@ -41,31 +41,33 @@
     <link rel="stylesheet" href="{{ asset('public/css/nivo-slider.css')}}">
     <link rel="stylesheet" href="{{ asset('public/css/jquery.fancybox.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/css/style.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/css/cus.css')}}">
-    <style type="text/css">
-        .why {
-            background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.7)), url({{ asset('public/images/why.jpg') }});
-            /* background: url(./images/why.jpg) no-repeat top center; */
-            background-repeat:no-repeat;
-            background-size: cover;
-            background-position: top center;
-            background-attachment: fixed;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/css/mystyle.css')}}">
+
     
-        <script type="text/javascript">
-            function baseUrl(){
-                return '<?php echo url('/'); ?>';
-            }
-            window.token = '{{ csrf_token() }}';
-            window.loadmore = '{{ route("loadmoreProject") }}';
-       </script>
+    <script type="text/javascript">
+        function baseUrl(){
+            return '<?php echo url('/'); ?>';
+        }
+        window.token = '{{ csrf_token() }}';
+        window.loadmore = '{{ route("loadmoreProject") }}';
+   </script>
 </head>
 <body>
     <div class="wrapper">
         @include('templates.layout.header')    
         @yield('content')
         @include('templates.layout.footer')
+
+        <script src="{{ asset('public/js/jquery.min.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.fancybox.min.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.mmenu.min.all.js')}}"></script>
+        <script src="{{ asset('public/js/popper.min.js')}}"></script>
+        <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
+        <script src="{{ asset('public/js/slick.min.js')}}"></script>
+        <script src="{{ asset('public/js/wow.min.js')}}"></script>
+        <script src="{{ asset('public/fonts/fontawesome/fontawesome-all.js')}}"></script>
+        <script src="{{ asset('public/js/jquery.nivo.slider.js')}}"></script>
+        <script src="{{ asset('public/js/main.js')}}"></script>
 
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
@@ -77,19 +79,11 @@
         }(document, 'script', 'facebook-jssdk'));</script>
     </div>
     
+    
+
     {!! $setting->codechat !!}
     {{ $setting->analytics }}
     @yield('script')
-    <script src="{{ asset('public/js/jquery.min.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.fancybox.min.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.mmenu.min.all.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.mmenu.fixedelements.js')}}"></script>
-    <script src="{{ asset('public/js/popper.min.js')}}"></script>
-    <script src="{{ asset('public/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('public/js/slick.min.js')}}"></script>
-    <script src="{{ asset('public/js/wow.min.js')}}"></script>
-    <script src="{{ asset('public/fonts/fontawesome/fontawesome-all.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.nivo.slider.js')}}"></script>
-    <script src="{{ asset('public/js/jquery.js')}}"></script>
+    
 </body>
 </html>
