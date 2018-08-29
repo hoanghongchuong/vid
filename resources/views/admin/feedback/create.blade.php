@@ -32,6 +32,12 @@
                     @endif
               </div>
               
+
+              <div class="form-group col-md-12">
+                <label for="file">File zip</label>
+                  <input type="file" id="file" name="file_zip">                
+                  
+              </div>
             <div class="clearfix"></div>
             
             <div class="col-md-6">
@@ -50,7 +56,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label for="">Nội dung</label>
-				<textarea  name="content" id="txtContent" class="form-control" value=""></textarea>	
+				        <textarea  name="content" id="txtContent" class="form-control" value=""></textarea>	
                 
               </div>
             </div>

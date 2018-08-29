@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Feedback;
 use File;
+use Zip;
 class FeedbackController extends Controller
 {
     public function index(){
@@ -17,16 +18,29 @@ class FeedbackController extends Controller
     	return view('admin.feedback.create');
     }
     public function postCreate(Request $request){
-    	// $img = $request->file('fImages');
-     //    $path_img='upload/hinhanh';
-     //    $img_name='';
-     //    if(!empty($img)){
-     //        $img_name=time().'_'.$img->getClientOriginalName();
-     //        $img->move($path_img,$img_name);
-     //    }
+    	$img = $request->file('fImages');
+        $path_img='upload/hinhanh';
+        $img_name='';
+        if(!empty($img)){
+            $img_name=time().'_'.$img->getClientOriginalName();
+            $img->move($path_img,$img_name);
+        }
+        
+        if(!empty($request->file('file_zip')))
+        {
+            $fileZip = $request->file('file_zip');
+            $path = 'public/uploads/questions';
+            $fileName = $fileZip->getClientOriginalName();
+
+            $fileDirect = 'public/uploads/questions/'.time().'_'.$fileName;
+            $fileZip->move($path, $fileDirect);
+            
+        }
+
         $data = new Feedback;
         $data->name = $request->name;
         $data->photo = $img_name; 
+        $data->zip = $fileName;
         $data->position = $request->position;
         $data->content = $request->content;
         $data->save();
@@ -50,6 +64,14 @@ class FeedbackController extends Controller
             }
         }
         $data->name = $request->name;
+        // dd($data->zip);
+        $path = 'public/uploads/questions';
+        $zip = Zip::open($data->zip);
+        $zip->extract($path);
+        $zip->close();
+        if (File::exists($data->zip)) {
+            File::delete($data->zip);
+        }
         $data->position = $request->position;
         $data->content = $request->content;
         $data->save();

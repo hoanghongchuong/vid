@@ -12,7 +12,8 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.2",
         "radic/blade-extensions": "~7.0",
-        "zaloplatform/zalo-php-sdk": "^1.0"
+        "zaloplatform/zalo-php-sdk": "^1.0",
+        "zanysoft/laravel-zip": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

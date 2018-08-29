@@ -166,6 +166,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 
+        ZanySoft\Zip\ZipServiceProvider::class,
+        
         /*
          * Package Service Providers...
          */
@@ -180,6 +182,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        
 
     ],
 
@@ -235,7 +238,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     
-
+        'Zip' => ZanySoft\Zip\ZipFacade::class,
     ],
 
 ];
