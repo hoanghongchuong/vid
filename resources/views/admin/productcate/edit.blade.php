@@ -46,14 +46,14 @@
 									</div> -->
 									
 									<div class="clearfix"></div>
-						        	<!-- <div class="form-group">
+						        	<div class="form-group">
 								      	<label for="ten">Danh mục cha</label>
 								      	<select name="txtProductCate" class="form-control">
 
 								      		<option value="0">Chọn danh mục</option>
 								      		<?php cate_parent($parent,0,"--",$data["parent_id"]) ?>
 								      	</select>
-									</div> -->
+									</div>
 							    	<div class="form-group @if ($errors->first('txtName')!='') has-error @endif">
 								      	<label for="ten">Tên</label>
 								      	<input type="text" name="txtName" id="txtName" value="{!! old('txtName', isset($data) ? $data->name : null) !!}"  class="form-control" />
@@ -68,7 +68,7 @@
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('txtAlias'); !!}</label>
 								      	@endif
 									</div>
-									<div class="form-group">
+									<div class="form-group hidden">
 										<label for="">Mô tả</label>
 										<textarea name="description" rows="5" id="txtContent" class="form-control">{{$data->description}}</textarea>
 									</div>

@@ -2,123 +2,132 @@
 @section('content')
 <?php
     $setting = Cache::get('setting');
-    $about = Cache::get('about');
+    $banner = DB::table('banner_content')->where('position', 2)->first();
 ?>
-<div id="content">
-    <div class="page-title-wrap page-title-wrap-bg" style="background-image: url({{asset('public/images/bg-title.jpg')}});">
-    <div class="page-title-overlay"></div>
+<style type="text/css">
+    /* slider */
+    .slider-area {
+        position: relative;
+        z-index: 1;
+    }
+    .nivo-caption {
+        background: transparent;
+        padding: 0;
+    }
+    .break-wrap {
+        background: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,.6)), url('./images/break.jpg');
+        background-size: cover;
+        /* opacity: .4; */
+    }
+    .regis {
+        background: url(./images/38.jpg) no-repeat top center;
+        background-size: cover;
+    }
+</style>
+
+<main class="b1 index">
+    <section class="bread-wrap" style="background: url({{ asset('upload/banner/'.@$banner->image)  }})">
         <div class="container">
-            <div class="page-title-inner block-center">
-                <div class="block-center-inner">
-                    <h1>Danh mục</h1>
-                    <ul class="breadcrumbs breadcrumbs-left">
-                        <!-- <li class="first">You are here:</li> -->
-                        <li class="home">
-                            <span>
-                                <a rel="v:url" href="{{url('')}}" class="home">
-                                    <span>Trang chủ</span>
-                                </a>
-                            </span>
-                        </li>
-                        <li>
-                            <span>Tin tức</span>
-                        </li>
-                        <li><span>{{ $tintuc_cate->name }}</span></li>
-                    </ul>
+            <h1 class="t3 text-center s30 bread-tit">{{$tintuc_cate->name}}</h1>
+            <ul class="s15 list-unstyled justify-content-center bread op7 text-center">
+                <li><a href="{{url('')}}" title="">Trang chủ</a></li>
+                <li>Tin tức</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="blogp">
+        <div class="container">
+            <ul class="s15 text-uppercase justify-content-md-center nav nav-pills blog-tabs" role="tablist">
+                @foreach($cateNews as $k=>$cate)
+                <li class="nav-item">
+                    <a class="nav-link @if($cate->id == $tintuc_cate->id) active @endif" href="{{url('tin-tuc/'.$cate->alias)}}"><span>{{$cate->name}}</span></a>
+                </li>
+                @endforeach
+            </ul>
+        </div>
+
+        <div class="b2">
+            <div class="container">
+                <div class="tab-content blog-tabs-content">
+                    <div class="tab-pane fade show active" id="noithat">
+                        <!-- <div class="blog-slider">
+                            @foreach($hot_news as $hot)
+                            <article class="blog-item">
+                                <figure class="text-center blog-img">
+                                    <a href="{{url('tin-tuc/'.$hot->alias.'.html')}}" title="{{$hot->name}}"><img src="{{asset('upload/news/'.$hot->photo)}}" title="{{$hot->name}}" alt="{{$hot->name}}"></a>
+                                </figure>
+
+                                <figcaption class="blog-content">
+                                    <h3 class="medium pt-3 pb-2"><a href="bdetail.html" title="{{$hot->name}}">{{$hot->name}}</a></h3>
+                                    <h4 class="s15 t5 bdetail-time">{{date('d/m/Y', strtotime($hot->created_at))}}</h4>
+                                    <div class="s15 blog-content-wrap">
+                                        <p>{!! $hot->mota !!}</p>
+                                    </div>
+                                </figcaption>
+                            </article>
+                            @endforeach
+                            
+                        </div> -->
+
+                        <div class="blog-wrap" style="margin-top: 40px;">
+                            <div class="row">
+                                @foreach($tintuc as $item)
+                                <div class="col-lg-4 col-md-6">
+                                    <article class="video-item">
+                                        <figure class="text-center video-img">
+                                            <a href="{{ url('tin-tuc/'.$item->alias.'.html') }}" title="{{$item->name}}"><img src="{{asset('upload/news/'.$item->photo)}}" alt="{{$item->name}}" title="{{$item->name}}"></a>
+                                        </figure>
+
+                                        <figcaption class="video-content">
+                                            <h3 class="medium py-2"><a href="{{ url('tin-tuc/'.$item->alias.'.html') }}" title="{{$item->name}}">{{$item->name}}</a></h3>
+
+                                            <p class="s15 t4">{{$item->mota}}</p>
+                                        </figcaption>
+                                    </article>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="paginations" style="text-align: center; margin-top: 30px;">
+                                {!! $tintuc->links() !!}
+                            </div>
+                            <!-- <ul class="pb-md-4 pt-md-5 pagi text-center">
+                                <li><a href="#" title="">1</a></li>
+                                <li><a href="#" title="">2</a></li>
+                                <li><a href="#" title="">3</a></li>
+                                <li><a href="#" title="">4</a></li>
+                            </ul> -->
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </div>
-    <div class="site-content-archive">
-        <div class="container clearfix">
-            <div class="row clearfix">
-                <div class="sidebar left-sidebar col-md-3">
-                   <!--  <aside id="search-2" class="widget widget_search">
-                        <form class="search-form" method="get" id="searchform" action=""> 
-                            <input type="text" value="" name="s" id="s" placeholder="Search..."> 
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-                    </aside> -->
-                    <!--  -->
+    </section>
 
-                    <aside class="widget widget_categories">
-                        <h4 class="widget-title"><span>Danh sách tin tức</span></h4>
-                            <ul>
-                                @foreach($cateNews as $cate)
-                                <li class="cat-item @if($cate->id == $tintuc_cate->id) current-cat @endif">
-                                    <a href="{{url('tin-tuc/'.$cate->alias)}}">{{ $cate->name }}</a>
-                                </li>
-                                @endforeach
+    <section class="b2 pt-4 break">
+        <div class="container">
+            <div class="break-wrap">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <img class="wow tada" data-wow-iteration="infinite" src="{{ asset('public/images/phone.png')}}" title="" alt="">
 
-                            </ul>
-                    </aside>
-
-                    <aside class="widget widget-posts" >
-                        <h4 class="widget-title"><span>Tin tức nổi bật</span></h4>
-                        <div class="widget-posts-wrap">
-                        <!-- item -->
-                        @foreach($hot_news as $hot)
-                            <div class="widget_posts_item clearfix">
-                                <div class="widget-posts-thumbnail">
-                                    <div class="entry-thumbnail">
-                                        <a href="#" class="entry-thumbnail_overlay">
-                                            <img width="160" height="160" class="img-responsive" src="http://viettitan.com/wp-content/uploads/2017/04/thiet-ke-website-do-choi-Viettitan-1.gif">
-                                        </a>
-                                        <a href="#" class="prettyPhoto"><i class="fa fa-expand"></i></a>
-                                    </div>
-                                </div>
-                                <div class="widget-posts-content-wrap">
-                                    <a class="widget-posts-title" href="#">{{$hot->name}}</a>
-                                    <div class="widget-posts-date"> {{date('d/m/Y', strtotime($hot->created_at))}}</div>
-                                </div>
+                            <div class="text-white break-info">
+                                <h2 class="s24 op7 pb-2 bold text-uppercase">Đăng ký nhận tư vấn thiết kế nội thất</h2>
+                                <h3 class="op7">Chúng tôi cam kết tạo ra không gian hoàn hảo cho tổ ấm của bạn.</h3>
                             </div>
-                        @endforeach
-                
                         </div>
-                    </aside>
-                </div>
-                <div class="site-content-archive-inner col-md-9">
-                    <div class="blog-wrap layout-container blog-style-2">
-                        <div class="blog-inner clearfix">
-                            @foreach($tintuc as $item)
-                            <article  class="clearfix style-2 post type-post ">
-                                <div class="entry-wrap clearfix">
-                                    <div class="entry-thumbnail-wrap">
-                                        <div class="entry-thumbnail">
-                                            <a href="{{url('tin-tuc/'.$item->alias.'.html')}}" class="entry-thumbnail_overlay">
-                                                <img width="300" height="300" class="img-responsive" src="{{ asset('upload/news/'.$item->photo) }}">
-                                            </a>
-                                            <a href="#" class="prettyPhoto"><i class="fa fa-expand"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="entry-content-wrap">
-                                        <div class="entry-content-top-wrap clearfix">
-                                            <div class="entry-content-top-right">
-                                                <h3 class="entry-title"> <a href="{{url('tin-tuc/'.$item->alias.'.html')}}"><span >{{$item->name}}</span></a></h3>
-                                                <div class="entry-post-meta-wrap">
-                                                    <ul class="entry-meta">
-                                                        <li class="entry-meta-date"> 
-                                                            <a href="#"> <span>{{ date('d/m/Y', strtotime($item->created_at)) }}</span> </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            <p>{!! $item->mota !!}
-                                                <a class="read-more" href="{{url('tin-tuc/'.$item->alias.'.html')}}"> Xem tiếp</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            @endforeach
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="d-flex align-items-center justify-content-center py-3 break-r">
+                            <a href="tel:{{@$setting->phone}}" title="" title="" class="btn text-uppercase phone-btn">Liên hệ ngay</a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-    </div>
-</div>
+    </section>   
+</main>
 @endsection

@@ -253,13 +253,13 @@ class IndexController extends Controller {
 	public function getNews()
 	{
 		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();		
-		$tintuc = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('stt','asc')->paginate(24);		
+		$tintuc = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('stt','asc')->paginate(6);		
 		$hot_news = DB::table('news')->where('status',1)->where('com', 'tin-tuc')->where('noibat',1)->orderBy('stt','asc')->take(8)->get();		
 		$com='tin-tuc';
 		// Cấu hình SEO
-		$title = "Tin tức phong thủy";
-		$keyword = "Tin tức phong thủy";
-		$description = "Tin tức phong thủy";
+		$title = "Tin tức";
+		$keyword = "Tin tức";
+		$description = "Tin tức";
 		$img_share = '';
 		// End cấu hình SEO
 		return view('templates.news_tpl', compact('tintuc','keyword','description','title','img_share','com','cateNews','hot_news'));
@@ -292,6 +292,31 @@ class IndexController extends Controller {
 		}
 	}
 	
+	public function getNewsDetail($id)
+	{
+		$news_detail = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->where('alias',$id)->get()->first();
+		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();
+		if(!empty($news_detail)){			
+			$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
+			$baiviet_khac = DB::table('news')->where('status',1)->where('id','<>', $news_detail->id)->where('cate_id', $news_detail->cate_id)->where('com','tin-tuc')->orderby('id','desc')->take(2)->get();
+			$com='tin-tuc';
+			$setting = Cache::get('setting');
+			// Cấu hình SEO
+			if(!empty($news_detail->title)){
+				$title = $news_detail->title;
+			}else{
+				$title = $news_detail->name;
+			}
+			$keyword = $news_detail->keyword;
+			$description = $news_detail->description;
+			$img_share = asset('upload/news/'.$news_detail->photo);
+
+			return view('templates.news_detail_tpl', compact('news_detail','com','banner_danhmuc','baiviet_khac','keyword','description','title','img_share','cateNews'));
+		}else{
+			return redirect()->route('getErrorNotFount');
+		}
+		
+	}
 
 	public function getCateService(){
 		$cate_service = DB::table('news_categories')->where('status',1)->where('com','dich-vu')->orderBy('id','asc')->get();
@@ -313,31 +338,7 @@ class IndexController extends Controller {
 		return view('templates.thuvienanh_tpl', compact('thuvienanh','com','camnhan_khachhang','keyword','description','title','img_share'));
 	}
 	
-	public function getNewsDetail($id)
-	{
-		$news_detail = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->where('alias',$id)->get()->first();
-		$cateNews = DB::table('news_categories')->where('com','tin-tuc')->get();
-		if(!empty($news_detail)){			
-			$cate_pro = DB::table('product_categories')->where('status',1)->where('parent_id',0)->orderby('id','asc')->get();
-			$baiviet_khac = DB::table('news')->where('status',1)->where('id','<>', $news_detail->id)->where('com','tin-tuc')->orderby('id','desc')->take(5)->get();
-			$com='tin-tuc';
-			$setting = Cache::get('setting');
-			// Cấu hình SEO
-			if(!empty($news_detail->title)){
-				$title = $news_detail->title;
-			}else{
-				$title = $news_detail->name;
-			}
-			$keyword = $news_detail->keyword;
-			$description = $news_detail->description;
-			$img_share = asset('upload/news/'.$news_detail->photo);
-
-			return view('templates.news_detail_tpl', compact('news_detail','com','banner_danhmuc','baiviet_khac','keyword','description','title','img_share'));
-		}else{
-			return redirect()->route('getErrorNotFount');
-		}
-		
-	}
+	
 	
 
 	public function postGuidonhang(Request $request)

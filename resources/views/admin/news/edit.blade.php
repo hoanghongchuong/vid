@@ -43,13 +43,13 @@
 										</div>
 										<label for="file">Chọn File ảnh</label>
 								     	<input type="file" id="file" name="fImages" >
-								    	<p class="help-block">Width:225px - Height: 162px</p>
+								    	<p class="help-block">Ảnh phải có dung lượng không vượt quá 2MB</p>
 								    	@if ($errors->first('fImages')!='')
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('fImages'); !!}</label>
 								      	@endif
 									</div>									
 									<div class="clearfix"></div>
-									@if($_GET['type']!='tin-tuc')
+									@if($_GET['type']=='tin-tuc')
 									<div class="form-group">
 								      	<label for="ten">Danh mục bài viết</label>
 								      	<select name="txtNewsCate" class="form-control">
@@ -80,8 +80,8 @@
 									</div>
 									@endif
 								</div>
-								<!-- <div class="col-md-6 col-xs-12">
-									@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+								<div class="col-md-6 col-xs-12">
+									@if($_GET['type']=='tin-tuc')
 									<div class="form-group @if ($errors->first('fImagesBg')!='') has-error @endif">
 										<div class="form-group">
 											<div class="img_backgound">
@@ -92,16 +92,16 @@
 												@endif
 											</div>
 										</div>
-										<label for="file">Chọn background</label>
+										<label for="file">Ảnh chi tiết</label>
 								     	<input type="file" id="file" name="fImagesBg" >
-								    	<p class="help-block">Width:225px - Height: 162px</p>
+								    	<p class="help-block">Ảnh phải có dung lượng không vượt quá 2MB</p>
 								    	@if ($errors->first('fImagesBg')!='')
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('fImagesBg'); !!}</label>
 								      	@endif
 									</div>
 									@endif
 									
-								</div> -->
+								</div>
 								<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 							</div>
 							<div class="clearfix"></div>
@@ -165,14 +165,14 @@
 				        	<input type="checkbox" name="status" {!! (!isset($data->status) || $data->status==1)?'checked="checked"':'' !!}> Hiển thị
 				    	</label>
 				    </div>
-				    <!-- <div class="form-group">
+				    <div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="noibat" 
 				        	{{ ($data->noibat==1)?'checked="checked"':'' }}> 
 				        	Nổi bật
 				    	</label>
 					</div>
-					@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+					<!-- @if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
 			    	<div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="home" {{ ($data->home==1)?'checked="checked"':'' }}> Hiển thị trang chủ

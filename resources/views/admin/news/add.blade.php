@@ -48,14 +48,14 @@
 									<div class="form-group col-md-12 @if ($errors->first('fImages')!='') has-error @endif">
 										<label for="file">File ảnh</label>
 								     	<input type="file" id="file" name="fImages" >
-								    	<p class="help-block">Width:225px - Height: 162px</p>
+								    	<p class="help-block">Ảnh phải có dung lượng không vượt quá 2MB</p>
 								    	@if ($errors->first('fImages')!='')
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('fImages'); !!}</label>
 								      	@endif
 									</div>
 									
 									<div class="clearfix"></div>
-									@if($_GET['type']!='tin-tuc')
+									@if($_GET['type']=='tin-tuc')
 									<div class="form-group">
 								      	<label for="ten">Danh mục cha</label>
 								      	<select name="txtNewsCate" class="form-control">
@@ -87,18 +87,18 @@
 									
 									<input type="hidden" name="txtCom" value="{{ @$_GET['type'] }}"/>
 								</div>
-								<!-- <div class="col-md-6 col-xs-12">
-									@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+								<div class="col-md-6 col-xs-12">
+									@if($_GET['type']=='tin-tuc')
 									<div class="form-group col-md-12 @if ($errors->first('fImagesBg')!='') has-error @endif">
-										<label for="file">File background</label>
+										<label for="file">Ảnh chi tiết</label>
 								     	<input type="file" id="file" name="fImagesBg" >
-								    	<p class="help-block">Width:225px - Height: 162px</p>
+								    	<p class="help-block">Ảnh phải có dung lượng không vượt quá 2MB</p>
 								    	@if ($errors->first('fImagesBg')!='')
 								      	<label class="control-label" for="inputError"><i class="fa fa-times-circle-o"></i> {!! $errors->first('fImagesBg'); !!}</label>
 								      	@endif
 									</div>
 									@endif
-								</div> -->
+								</div>
 							</div>
 							<div class="clearfix"></div>
 	                  	</div><!-- /.tab-pane -->
@@ -148,12 +148,12 @@
 
 			    <div class="col-md-6">
 			    	
-			    	<!-- <div class="form-group">
+			    	<div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="noibat" >Nổi bật
 				    	</label>
 					</div>
-					@if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
+					<!-- @if($_GET['type']!='tin-tuc' && $_GET['type']!='tuyen-dung')
 					<div class="form-group">
 					    <label>
 				        	<input type="checkbox" name="home"> Hiển thị trang chủ
